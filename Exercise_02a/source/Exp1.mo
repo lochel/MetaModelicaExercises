@@ -29,8 +29,8 @@ package Exp1
     end NEGop;
 
     /*
-     * Note that the external C code for the OMC version assumes you add the
-     * records in a specific order. The RML version does not make this assumtpion.
+     * Note: The external C code for the OMC version assumes you add the
+     * records in a specific order.
      */
 
     /* Add POWop here */
@@ -42,15 +42,15 @@ package Exp1
 
   function eval "Abstract syntax of the language Exp1: Evaluation semantics  of Exp1"
     input Exp inExp;
-    output Integer outInteger;
+    output Integer outResult;
   algorithm 
-    outInteger := matchcontinue (inExp)
+    outResult := matchcontinue (inExp)
       local
         Integer ival,v1,v2;
         Exp e1,e2,e;
     
       /* evaluation of an integer node is the integer itself */
-      case (INTconst(integer=ival))
+      case INTconst(integer=ival)
       then ival;
       
       /*
@@ -58,27 +58,27 @@ package Exp1
        * adding the evaluated results of its children e1 and e2 
        * Subtraction, multiplication, division operators have similar specs.
        */      
-      case (ADDop(exp1=e1, exp2=e2)) equation
+      case ADDop(exp1=e1, exp2=e2) equation
         v1 = eval(e1);
         v2 = eval(e2);
       then v1 + v2;
       
-      case (SUBop(exp1=e1, exp2=e2)) equation 
+      case SUBop(exp1=e1, exp2=e2) equation 
         v1 = eval(e1);
         v2 = eval(e2);
       then v1 - v2;
       
-      case (MULop(exp1=e1, exp2=e2)) equation 
+      case MULop(exp1=e1, exp2=e2) equation 
         v1 = eval(e1);
         v2 = eval(e2);
       then v1*v2;
       
-      case (DIVop(exp1=e1, exp2=e2)) equation 
+      case DIVop(exp1=e1, exp2=e2) equation 
         v1 = eval(e1);
         v2 = eval(e2);
       then intDiv(v1, v2);
       
-      case (NEGop(exp=e)) equation 
+      case NEGop(exp=e) equation 
         v1 = eval(e);
       then -v1;
       
