@@ -17,16 +17,6 @@ int yywrap()
   return 1;
 }
 
-#ifdef RML
-#include "Exp1.h"
-#include "yacclib.h"
-#ifndef Exp1__FACop
-#define Exp1__FACop(X) (void*)yyerror("")
-#endif
-#ifndef Exp1__POWop
-#define Exp1__POWop(X,Y) (void*)yyerror("")
-#endif
-#else
 #include "meta_modelica.h"
 void* getAST()
 {
@@ -59,7 +49,6 @@ struct record_description WORKAROUND__Exp1_Exp_FACop__desc = {
 #define Exp1__NEGop(X1)    (mmc_mk_box2(8,&Exp1_Exp_NEGop__desc,(X1)))
 #define Exp1__POWop(X1,X2) (mmc_mk_box3(9,&WORKAROUND__Exp1_Exp_POWop__desc,(X1),(X2)))
 #define Exp1__FACop(X1)    (mmc_mk_box2(10,&WORKAROUND__Exp1_Exp_FACop__desc,(X1)))
-#endif
 
 %}
 

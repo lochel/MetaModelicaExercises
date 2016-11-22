@@ -4,14 +4,9 @@
 
 void* absyn_integer(char *s);
 
-#ifdef RML
-#include "yacclib.h"
-#include "Exp2.h"
-#else
 #include "meta_modelica.h"
 extern struct record_description Exp2_Exp_INT__desc;
 #define Exp2__INT(X1) (mmc_mk_box2(3,&Exp2_Exp_INT__desc,(X1)))
-#endif
 
 %}
 

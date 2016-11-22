@@ -17,16 +17,6 @@ int yywrap()
   return 1;
 }
 
-#ifdef RML
-#include "Exp2.h"
-#include "yacclib.h"
-#ifndef Exp2__FAC
-#define Exp2__FAC (void*)yyerror("")
-#endif
-#ifndef Exp2__POW
-#define Exp2__POW (void*)yyerror("")
-#endif
-#else
 #include "meta_modelica.h"
 
 void* getAST()
@@ -70,7 +60,6 @@ struct record_description WORKAROUND__Exp2_UnOp_FAC__desc = {
 
 #define Exp2__NEG (mmc_mk_box1(3,&Exp2_UnOp_NEG__desc))
 #define Exp2__FAC (mmc_mk_box1(4,&WORKAROUND__Exp2_UnOp_FAC__desc))
-#endif
 
 %}
 
@@ -117,7 +106,3 @@ u_element        :  element
 element          :  T_INTCONST
                  |  T_LPAREN  expression  T_RPAREN
                     { $$ = $2;}
-
-
-
-

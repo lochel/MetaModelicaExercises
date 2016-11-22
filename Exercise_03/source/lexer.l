@@ -1,10 +1,6 @@
 %{
 
-#ifdef RML
-  #include "yacclib.h"
-#else
-  #include "meta_modelica.h"
-#endif
+#include "meta_modelica.h"
 
 #define YYSTYPE void*
 #include "parser.h"

@@ -1,5 +1,5 @@
 package Eval
-  
+
 import Absyn;
 
 uniontype Value " Values, bindings and environment "
@@ -35,7 +35,7 @@ function lookup "lookup returns the value associated with an identifier.
   input Env inEnv;
   input String inIdent;
   output Value outValue;
-algorithm 
+algorithm
   outValue:=
   matchcontinue (inEnv,inIdent)
     local
@@ -52,7 +52,7 @@ function lookupextend
   input String inIdent;
   output Env outEnv;
   output Value outValue;
-algorithm 
+algorithm
   (outEnv,outValue):=
   matchcontinue (inEnv,inIdent)
     local
@@ -61,7 +61,7 @@ algorithm
       String id;
     // Return value of id in env. If id not present, add id and return 0
     case (env,id)
-      equation 
+      equation
         failure(_ = lookup(env, id));
         // failed to find id
         value = INTval(0);
@@ -79,7 +79,7 @@ function update
   input Absyn.Ident in_ident;
   input Value in_value;
   output Env out_env;
-algorithm 
+algorithm
   out_env:=
   matchcontinue (in_env,in_ident,in_value)
     local
@@ -94,7 +94,7 @@ function type_lub
   input Value in_value1;
   input Value in_value2;
   output Ty2 out_ty2;
-algorithm 
+algorithm
   out_ty2:=
   matchcontinue (in_value1,in_value2)
     local
@@ -102,10 +102,10 @@ algorithm
       Real x2,y2;
     case (INTval(x),INTval(y)) then INT2(x,y);
     case (INTval(x),REALval(y2))
-      equation 
+      equation
         x2 = intReal(x); then REAL2(x2,y2);
     case (REALval(x2),INTval(y))
-      equation 
+      equation
         y2 = intReal(y); then REAL2(x2,y2);
     case (REALval(x2),REALval(y2))
       then REAL2(x2,y2);
@@ -117,7 +117,7 @@ function apply_int_binop "************** Binary and unary operators ************
   input Integer in_integer2;
   input Integer in_integer3;
   output Integer outInteger;
-algorithm 
+algorithm
   outInteger:=
   matchcontinue (in_binop1,in_integer2,in_integer3)
     local Integer x,y;
@@ -133,7 +133,7 @@ function apply_real_binop
   input Real in_real2;
   input Real in_real3;
   output Real out_real;
-algorithm 
+algorithm
   out_real:=
   matchcontinue (in_binop1,in_real2,in_real3)
     local Real x,y;
@@ -148,7 +148,7 @@ function apply_int_unop
   input Absyn.UnOp AbsynNEG;
   input Integer x;
   output Integer y;
-algorithm 
+algorithm
   y := -x;
 end apply_int_unop;
 
@@ -156,8 +156,8 @@ function apply_real_unop
   input Absyn.UnOp AbsynNEG;
   input Real x;
   output Real y;
-algorithm 
-  y := -. x;
+algorithm
+  y := -x;
 end apply_real_unop;
 
 function eval "************** Expression evaluation **************"
@@ -165,7 +165,7 @@ function eval "************** Expression evaluation **************"
   input Absyn.Exp in_exp;
   output Env out_env;
   output Value out_value;
-algorithm 
+algorithm
   (out_env,out_value):=
   matchcontinue (in_env,in_exp)
     local
@@ -184,18 +184,18 @@ algorithm
     case (env,Absyn.REAL(rval)) then (env,REALval(rval));
     // variable id
     case (env,Absyn.IDENT(id))
-      equation 
+      equation
         (env2,value) = lookupextend(env, id); then (env2,value);
     // int binop int
     case (env,Absyn.BINARY(e1,binop,e2))
-      equation 
+      equation
         (env1,v1) = eval(env, e1);
         (env2,v2) = eval(env, e2);
         INT2(x,y) = type_lub(v1, v2);
         z = apply_int_binop(binop, x, y); then (env2,INTval(z));
     // int/real binop int/real
     case (env,Absyn.BINARY(e1,binop,e2))
-      equation 
+      equation
         (env1,v1) = eval(env, e1);
         (env2,v2) = eval(env, e2);
         REAL2(x2,y2) = type_lub(v1, v2);
@@ -207,7 +207,7 @@ algorithm
         y = apply_int_unop(unop, x); then (env1,INTval(y));
     // real unop exp
     case (env,Absyn.UNARY(unop,e))
-      equation 
+      equation
         (env1,REALval(x2)) = eval(env, e);
         y2 = apply_real_unop(unop, x2); then (env1,REALval(y2));
     // eval of an assignment node returns the updated
@@ -223,4 +223,3 @@ algorithm
   end matchcontinue;
 end eval;
 end Eval;
-

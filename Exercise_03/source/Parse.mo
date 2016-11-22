@@ -3,12 +3,12 @@ package Parse
 
   function yyparse
     output Integer i;
-  external "C" annotation(Library = {"lexer.o","parser.o"});
+  external "C" annotation(Library = {"lexer.o", "parser.o"});
   end yyparse;
 
   function getAST
     output Exp exp;
-  external "C" annotation(Library = {"lexer.o","parser.o"});
+  external "C" annotation(Library = {"lexer.o", "parser.o"});
   end getAST;
 
   function parse

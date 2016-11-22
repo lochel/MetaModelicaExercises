@@ -1,0 +1,10 @@
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+*.bat text eol=native
+*.l text eol=lf
+*.mo text eol=lf
+*.mos text eol=lf
+*.sh text eol=lf
+*.txt text eol=lf
+*.y text eol=lf
