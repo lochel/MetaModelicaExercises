@@ -1,19 +1,15 @@
 %{
+
 #define YYSTYPE void*
 #include "parser.h"
 
 int lex_icon();
 int lex_ident();
 
-#ifdef RML
-#include "yacclib.h"
-#include "Assignment.h"
-#else
 #include "meta_modelica.h"
 
 extern struct record_description Assignment_Exp_INT__desc;
 #define Assignment__INT(X1) (mmc_mk_box2(3,&Assignment_Exp_INT__desc,(X1)))
-#endif
 
 %}
 

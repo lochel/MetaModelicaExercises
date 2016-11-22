@@ -1,4 +1,5 @@
 %{
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,16 +18,11 @@ int yywrap()
   return 1;
 }
 
-#ifdef RML
-#include "yacclib.h"
-#include "Assignment.h"
-#else
 #include "meta_modelica.h"
 void* getAST()
 {
   return absyntree;
 }
-
 
 /* Program */
 extern struct record_description Assignment_Program_PROGRAM__desc;
@@ -58,7 +54,6 @@ extern struct record_description Assignment_BinOp_DIV__desc;
 extern struct record_description Assignment_UnOp_NEG__desc;
 
 #define Assignment__NEG (mmc_mk_box1(3,&Assignment_UnOp_NEG__desc))
-#endif
 
 %}
 
@@ -126,5 +121,3 @@ strong_operator :  T_MUL
 
 unary_operator  :  T_SUB
                         { $$ = Assignment__NEG;}
-
-
