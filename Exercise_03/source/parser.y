@@ -17,10 +17,6 @@ int yywrap()
   return 1;
 }
 
-#ifdef RML
-#include "SymbolicDerivative.h"
-#include "yacclib.h"
-#else
 #include "meta_modelica.h"
 void* getAST()
 {
@@ -45,7 +41,6 @@ extern struct record_description SymbolicDerivative_Exp_CALL__desc;
 #define SymbolicDerivative__NEG(X1) (mmc_mk_box2(8,&SymbolicDerivative_Exp_NEG__desc,(X1)))
 #define SymbolicDerivative__IDENT(X1) (mmc_mk_box2(9,&SymbolicDerivative_Exp_IDENT__desc,(X1)))
 #define SymbolicDerivative__CALL(X1,X2) (mmc_mk_box3(10,&SymbolicDerivative_Exp_CALL__desc,(X1),(X2)))
-#endif
 
 %}
 
@@ -102,4 +97,3 @@ call_args       :  expression
                         { $$ = (void*) mmc_mk_cons($1,mmc_mk_nil());}
                 |  expression T_COMMA call_args
                         { $$ = (void*) mmc_mk_cons($1,$3);}
-
