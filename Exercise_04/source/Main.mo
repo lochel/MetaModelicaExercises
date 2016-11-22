@@ -12,6 +12,6 @@ package Main
     
     syntree := Parse.parse();
     result := Assignment.evalprogram(syntree);
-    print("result: " +& intString(result) +& "\n");
+    print("result: " + intString(result) + "\n");
   end main;
 end Main;

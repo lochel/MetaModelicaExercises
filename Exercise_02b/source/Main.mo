@@ -12,6 +12,6 @@ package Main
     
     syntree := Parse.parse();
     i := Exp2.eval(syntree);
-    print("result: " +& intString(i) +& "\n");
+    print("result: " + intString(i) + "\n");
   end main;
 end Main;
