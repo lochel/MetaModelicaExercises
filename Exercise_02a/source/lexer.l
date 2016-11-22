@@ -1,10 +1,12 @@
 %{
+
 #define YYSTYPE void*
 #include "parser.h"
 
 void* absyn_integer(char *s);
 
 #include "meta_modelica.h"
+
 extern struct record_description Exp1_Exp_INTconst__desc;
 #define Exp1__INTconst(X1) (mmc_mk_box2(3,&Exp1_Exp_INTconst__desc,(X1)))
 
@@ -37,5 +39,3 @@ void* absyn_integer(char *s)
 {
   return Exp1__INTconst(mmc_mk_icon(atoi(s)));
 }
-
-
