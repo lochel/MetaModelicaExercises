@@ -1,0 +1,34 @@
+echo(false);
+
+setCommandLineOptions({"+d=rml,noevalfunc ", "+g=MetaModelica"});
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+setEnvironmentVar("MODELICAUSERCFLAGS", "-g");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+msg := system("bison -d source/parser.y");
+if msg <> 0 then print("[bison -d source/parser.y] fails\n"); end if;
+msg := system("mv parser.tab.c parser.c");
+if msg <> 0 then print("[mv parser.tab.c parser.c] fails\n"); end if;
+msg := system("mv parser.tab.h parser.h");
+if msg <> 0 then print("[mv parser.tab.h parser.h] fails\n"); end if;
+msg := system("gcc -I" + getInstallationDirectoryPath() + "/include/omc -c -o parser.o parser.c");
+if msg <> 0 then print("[gcc -I" + getInstallationDirectoryPath() + "/include/omc -c -o parser.o parser.c] fails\n"); end if;
+
+msg := system("flex -t -l source/lexer.l > lexer.c");
+if msg <> 0 then print("[flex -t -l source/lexer.l > lexer.c] fails\n"); end if;
+msg := system("gcc -I" + getInstallationDirectoryPath() + "/include/omc -c -o lexer.o lexer.c");
+if msg <> 0 then print("[gcc -I" + getInstallationDirectoryPath() + "/include/omc -c -o lexer.o lexer.c] fails\n"); end if;
+
+loadFile("source/Exp1.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile("source/Parse.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile("source/Main.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+reopenStandardStream(OpenModelica.Scripting.StandardStream.stdout, "output_main.txt");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+reopenStandardStream(OpenModelica.Scripting.StandardStream.stdin, "source/input.txt");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+Main.main({""});
+msg := getErrorString(); if msg <> "" then print(msg); end if;

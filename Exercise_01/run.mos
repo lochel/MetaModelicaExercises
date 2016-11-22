@@ -1,0 +1,18 @@
+echo(false);
+
+setCommandLineOptions({"+d=rml,noevalfunc ", "+g=MetaModelica"});
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+setEnvironmentVar("MODELICAUSERCFLAGS", "-g");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+loadFile("source/Main.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile("source/Functions.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+loadFile("source/Types.mo");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+
+reopenStandardStream(OpenModelica.Scripting.StandardStream.stdout, "output_main.txt");
+msg := getErrorString(); if msg <> "" then print(msg); end if;
+Main.main({"10"});
+msg := getErrorString(); if msg <> "" then print(msg); end if;
