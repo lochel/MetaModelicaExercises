@@ -1,6 +1,6 @@
 echo(false);
 
-setCommandLineOptions({"+d=rml,noevalfunc ", "+g=MetaModelica"});
+setCommandLineOptions({"-d=rml,noevalfunc,gen", "+g=MetaModelica"});
 msg := getErrorString(); if msg <> "" then print(msg); end if;
 setEnvironmentVar("MODELICAUSERCFLAGS", "-g");
 msg := getErrorString(); if msg <> "" then print(msg); end if;
